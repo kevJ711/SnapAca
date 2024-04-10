@@ -1,5 +1,5 @@
 # SEA Stage 2 - Data Catalog Project
-http://127.0.0.1:5500/welcome.html
+
 This is the instructions, requirements, and starter for stage two of the Snap Engineering Academy application process.
 
 ## Your Task:
