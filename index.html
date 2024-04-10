@@ -5,22 +5,87 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- font awesome cdn link  -->
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <!-- custom css file link  -->
+    
     <link rel="stylesheet" href="css/style.css">
 
-    <!-- custom js file link  -->
+    
     <script src="js/script.js" defer></script>
+    <style>
+        /* Additional CSS styles for the "Add Your Own Music" button */
+        #addMusicButton {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 20px;
+        }
 
+        #addMusicButton:hover {
+            background-color: #218838; 
+        }
+               
+                .about {
+                    padding: 50px 0;
+                    background-color: #f8f9fa; 
+                }
+        
+                .about-container {
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    padding: 0 20px;
+                    text-align: center;
+                }
+        
+                .about-header .title {
+                    font-size: 36px;
+                    color: #333;
+                    margin-bottom: 30px;
+                }
+        
+                .about-content {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+        
+                .about-content p {
+                    font-size: 18px;
+                    line-height: 1.6;
+                    color: #555;
+                }
+        
+                .download-song {
+                    display: block;
+                    margin-top: 20px;
+                    background-color: #007bff;
+                    color: #fff;
+                    text-align: center;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    text-decoration: none;
+                    transition: background-color 0.3s;
+                }
+        
+                .download-song:hover {
+                    background-color: #0056b3;
+                }
+
+    </style>
 </head>
 <body>
     
 <div class="container">
 
-    <h1 class="heading"> music playlist </h1>
-
+    <h1 class="heading"> Mini Music Catalog Website</h1>
+    <button id="addMusicButton">Add Your Own Music</button>
     <div class="box-container">
 
         <div class="box" data-src="images/music-1.mp3">
@@ -31,8 +96,10 @@
                 <img src="images/album-1.png" alt="">
             </div>
             <div class="content">
-                <h3>NEFFEX cold</h3>
+                <h3>Any Colour You Like - Pink Floyd </h3>
             </div>
+             
+             <button class="delete-button">Delete</button>
         </div>
 
         <div class="box" data-src="images/music-2.mp3">
@@ -43,8 +110,10 @@
                 <img src="images/album-2.png" alt="">
             </div>
             <div class="content">
-                <h3>rize up</h3>
+                <h3>And I Love Her - The Beatles</h3>
             </div>
+            
+             <button class="delete-button">Delete</button>
         </div>
 
         <div class="box" data-src="images/music-3.mp3">
@@ -55,8 +124,10 @@
                 <img src="images/album-3.png" alt="">
             </div>
             <div class="content">
-                <h3>arround the world</h3>
+                <h3>Snooze - SZA</h3>
             </div>
+            
+             <button class="delete-button">Delete</button>
         </div>
 
         <div class="box" data-src="images/music-4.mp3">
@@ -67,8 +138,10 @@
                 <img src="images/album-4.png" alt="">
             </div>
             <div class="content">
-                <h3>THNK U jay someday</h3>
+                <h3>Wildest Dreams - Taylor Swift</h3>
             </div>
+            
+             <button class="delete-button">Delete</button>
         </div>
 
         <div class="box" data-src="images/music-5.mp3">
@@ -79,8 +152,10 @@
                 <img src="images/album-5.png" alt="">
             </div>
             <div class="content">
-                <h3>NEFFEX life</h3>
+                <h3>505 - ArcticMonkeys</h3>
             </div>
+            
+             <button class="delete-button">Delete</button>
         </div>
 
         <div class="box" data-src="images/music-6.mp3">
@@ -91,7 +166,9 @@
                 <img src="images/album-6.png" alt="">
             </div>
             <div class="content">
-                <h3>fun house</h3>
+                <h3>Good Morning - Kanye West</h3>
+                
+            <button class="delete-button">Delete</button>
             </div>
         </div>
 
@@ -104,6 +181,44 @@
     <h3 class="music-title">(play your song)</h3>
     <audio src="" controls></audio>
 </div>
+<script>
+    document.getElementById('addMusicButton').addEventListener('click', async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+            const audioRecorder = new MediaRecorder(stream);
+            
+            // Start recording audio
+            audioRecorder.start();
 
+            // Event listener for when audio recording is finished
+            audioRecorder.addEventListener('dataavailable', async (event) => {
+                const audioBlob = event.data;
+                // Save or upload the audioBlob
+            });
+
+            // Access webcam and display feed
+            const videoElement = document.createElement('video');
+            document.body.appendChild(videoElement);
+            videoElement.srcObject = stream;
+            videoElement.play();
+
+            // Capture picture from webcam
+            const canvasElement = document.createElement('canvas');
+            canvasElement.width = videoElement.videoWidth;
+            canvasElement.height = videoElement.videoHeight;
+            const canvasContext = canvasElement.getContext('2d');
+            canvasContext.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
+            const imageBlob = await new Promise((resolve) => canvasElement.toBlob(resolve, 'image/png'));
+            
+            // Save or upload the imageBlob
+
+            // Clean up
+            stream.getTracks().forEach(track => track.stop());
+            document.body.removeChild(videoElement);
+        } catch (error) {
+            console.error('Error accessing microphone or webcam:', error);
+        }
+    });
+</script>
 </body>
 </html>
